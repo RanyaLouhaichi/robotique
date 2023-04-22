@@ -3,7 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:robo/Vues/comp%C3%A9tition/addCompetition.dart';
 import 'package:robo/Vues/comp%C3%A9tition/displayCompetition.dart';
 
-import 'Team/addTeams.dart';
+
+import 'Team/displayTeams.dart';
 import 'User/addUser.dart';
 import 'User/displayUser.dart';
 

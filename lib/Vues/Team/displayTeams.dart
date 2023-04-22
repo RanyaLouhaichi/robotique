@@ -3,51 +3,17 @@ import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../models/Team.dart';
+import 'addTeams2.dart';
+
 enum CompetitionType { suiveur, toutTerrain, autonome, junior }
 
-class Team {
 
-  final String teamName;
-  final String robotName;
-  final String teamChef;
-  final String competitionType;
-  final String phoneNumber;
-
-
-  Team({
-    required this.teamName,
-    required this.robotName,
-    required this.teamChef,
-    required this.competitionType,
-    required this.phoneNumber,
-  });
-
-  // Create a map from Team object
-  Map<String, dynamic> toMap() {
-    return {
-      'teamName': teamName,
-      'robotName': robotName,
-      'teamChef': teamChef,
-      'competitionType': competitionType,
-      'phoneNumber': phoneNumber,
-    };
-  }
-
-  // Create a Team object from DocumentSnapshot
-  factory Team.fromSnapshot(DocumentSnapshot documentSnapshot) {
-    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-    return Team(
-      teamName: data['teamName'],
-      robotName: data['robotName'],
-      teamChef: data['teamChef'],
-      competitionType: data['competitionType'],
-      phoneNumber:data['phoneNumber'] ,
-    );
-  }
-}
 
 class TeamList extends StatelessWidget {
   const TeamList({Key? key}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +66,7 @@ class TeamList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showDialog(
+        /*  showDialog(
             context: context,
             builder: (BuildContext context) {
               final teamNameController = TextEditingController();
@@ -215,13 +181,22 @@ class TeamList extends StatelessWidget {
               );
             },
           );
+        */
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const addTeams()),
+          );
+
         },
+
+
         child: const Icon(Icons.add),
       ),
     );
   }
 
   void _openEditTeamDialog(BuildContext context, CollectionReference teams, Team team , String teamId) {
+    Color c1 = Theme.of(context).primaryColor;
     final teamNameController = TextEditingController(text: team.teamName);
     final robotNameController = TextEditingController(text: team.robotName);
     final teamChefController = TextEditingController(text: team.teamChef);
@@ -255,6 +230,15 @@ class TeamList extends StatelessWidget {
                   labelText: 'Team Chef',
                 ),
               ),
+              Row(children: [
+                Text("Competition:",
+                    style: TextStyle(
+                        fontSize: 20)),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+              ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -264,6 +248,15 @@ class TeamList extends StatelessWidget {
                         competitionTypeController.text = CompetitionType.suiveur.toString();
 
                       },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all(Size(20, 20)),
+                        backgroundColor: MaterialStateProperty.all(c1),
+                      ),
                       child: Text('suiveur'),
                     ),
                     ElevatedButton(
@@ -272,6 +265,15 @@ class TeamList extends StatelessWidget {
                         competitionTypeController.text = CompetitionType.toutTerrain.toString();
 
                       },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all(Size(20, 20)),
+                        backgroundColor: MaterialStateProperty.all(c1),
+                      ),
                       child: Text('Tout terrain'),
                     ),]
               ),
@@ -285,6 +287,15 @@ class TeamList extends StatelessWidget {
                       competitionTypeController.text = CompetitionType.autonome.toString();
 
                     },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      minimumSize: MaterialStateProperty.all(Size(20, 20)),
+                      backgroundColor: MaterialStateProperty.all(c1),
+                    ),
                     child: Text('autonome'),
                   ),
                   ElevatedButton(
@@ -293,6 +304,15 @@ class TeamList extends StatelessWidget {
                       competitionTypeController.text = CompetitionType.junior.toString();
 
                     },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      minimumSize: MaterialStateProperty.all(Size(20, 20)),
+                      backgroundColor: MaterialStateProperty.all(c1),
+                    ),
                     child: Text('junior'),
                   ),
                 ],
